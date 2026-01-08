@@ -17,6 +17,4 @@ Then open at:
 
 # Join the discord to get me to build you websites for free using AI!
 
-Join:
-
 https://discord.gg/cmPGdhXYxp
