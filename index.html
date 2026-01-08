@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUBSCRIPTION TRACKER</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-theme="dark">
+    <header class="header">
+        <div class="header-content">
+            <h1 class="logo">[ SUBTRACKER ]</h1>
+            <nav class="nav">
+                <button class="nav-btn active" data-view="dashboard">DASHBOARD</button>
+                <button class="nav-btn" data-view="subscriptions">SUBSCRIPTIONS</button>
+                <button class="nav-btn" data-view="email">EMAIL SYNC</button>
+                <button class="nav-btn" data-view="settings">SETTINGS</button>
+            </nav>
+            <a href="https://discord.gg/cmPGdhXYxp" target="_blank" rel="noopener" class="discord-btn" aria-label="Join Discord">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+            </a>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                <span class="theme-icon">◐</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="view active" id="dashboard-view">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <span class="stat-label">ACTIVE SUBS</span>
+                    <span class="stat-value" id="activeSubs">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">MONTHLY COST</span>
+                    <span class="stat-value" id="monthlyCost">$0.00</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">YEARLY COST</span>
+                    <span class="stat-value" id="yearlyCost">$0.00</span>
+                </div>
+                <div class="stat-card warning">
+                    <span class="stat-label">ZOMBIES FOUND</span>
+                    <span class="stat-value" id="zombieCount">0</span>
+                </div>
+            </div>
+            <div class="panel">
+                <h2 class="panel-title">// UPCOMING RENEWALS</h2>
+                <div class="renewals-list" id="renewalsList">
+                    <p class="empty-state">NO UPCOMING RENEWALS DETECTED</p>
+                </div>
+            </div>
+            <div class="panel">
+                <h2 class="panel-title">// ZOMBIE SUBSCRIPTIONS</h2>
+                <p class="panel-subtitle">SUBSCRIPTIONS YOU HAVEN'T USED IN 30+ DAYS</p>
+                <div class="zombies-list" id="zombiesList">
+                    <p class="empty-state">NO ZOMBIE SUBSCRIPTIONS FOUND</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="view" id="subscriptions-view">
+            <div class="panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">// ALL SUBSCRIPTIONS</h2>
+                    <button class="btn btn-primary" id="addSubBtn">+ ADD NEW</button>
+                </div>
+                <div class="subscriptions-list" id="subscriptionsList">
+                    <p class="empty-state">NO SUBSCRIPTIONS YET. ADD ONE TO GET STARTED!</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="view" id="email-view">
+            <div class="panel">
+                <h2 class="panel-title">// API CREDENTIALS</h2>
+                <p class="panel-subtitle">ENTER YOUR OWN API KEYS - STORED LOCALLY, NEVER SENT ANYWHERE</p>
+                <div class="api-setup-section">
+                    <div class="api-card">
+                        <div class="api-header">
+                            <span class="api-icon">📧</span>
+                            <span class="api-name">GMAIL</span>
+                            <span class="api-status" id="gmailStatus">NOT CONFIGURED</span>
+                        </div>
+                        <div class="api-form" id="gmailForm">
+                            <input type="text" class="input" id="gmailClientId" placeholder="GOOGLE CLIENT ID">
+                            <div class="api-actions">
+                                <button class="btn btn-primary" id="saveGmailBtn">SAVE & CONNECT</button>
+                                <button class="btn btn-secondary" id="helpGmailBtn">SETUP HELP</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="api-card">
+                        <div class="api-header">
+                            <span class="api-icon">📬</span>
+                            <span class="api-name">OUTLOOK</span>
+                            <span class="api-status" id="outlookStatus">NOT CONFIGURED</span>
+                        </div>
+                        <div class="api-form" id="outlookForm">
+                            <input type="text" class="input" id="outlookClientId" placeholder="MICROSOFT APPLICATION ID">
+                            <div class="api-actions">
+                                <button class="btn btn-primary" id="saveOutlookBtn">SAVE & CONNECT</button>
+                                <button class="btn btn-secondary" id="helpOutlookBtn">SETUP HELP</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <h2 class="panel-title">// CONNECTED ACCOUNTS</h2>
+                <div class="email-accounts" id="emailAccounts">
+                    <p class="empty-state">NO EMAIL ACCOUNTS CONNECTED</p>
+                </div>
+            </div>
+            <div class="panel">
+                <h2 class="panel-title">// DETECTED SUBSCRIPTIONS</h2>
+                <div class="detected-list" id="detectedList" aria-live="polite">
+                    <p class="empty-state">CONNECT AN EMAIL TO SCAN FOR SUBSCRIPTIONS</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="view" id="settings-view">
+            <div class="panel">
+                <h2 class="panel-title">// APPEARANCE</h2>
+                <div class="setting-row">
+                    <label class="setting-label">THEME</label>
+                    <select class="input select" id="themeSelect">
+                        <option value="dark">DARK MODE</option>
+                        <option value="light">LIGHT MODE</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <label class="setting-label">ACCENT COLOR</label>
+                    <div class="color-options" id="accentColors">
+                        <button class="color-btn active" data-color="cyan" style="background: #50E3C2"></button>
+                        <button class="color-btn" data-color="purple" style="background: #a855f7"></button>
+                        <button class="color-btn" data-color="orange" style="background: #f97316"></button>
+                        <button class="color-btn" data-color="pink" style="background: #ec4899"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel">
+                <h2 class="panel-title">// NOTIFICATIONS</h2>
+                <div class="setting-row">
+                    <label class="setting-label">RENEWAL REMINDERS</label>
+                    <label class="toggle">
+                        <input type="checkbox" id="renewalReminders" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-row">
+                    <label class="setting-label">DAYS BEFORE RENEWAL</label>
+                    <select class="input select" id="reminderDays">
+                        <option value="1">1 DAY</option>
+                        <option value="3" selected>3 DAYS</option>
+                        <option value="7">7 DAYS</option>
+                        <option value="14">14 DAYS</option>
+                    </select>
+                </div>
+                <div class="setting-row">
+                    <label class="setting-label">ZOMBIE ALERTS</label>
+                    <label class="toggle">
+                        <input type="checkbox" id="zombieAlerts" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="panel">
+                <h2 class="panel-title">// DATA</h2>
+                <div class="btn-group">
+                    <button class="btn btn-secondary" id="exportBtn">EXPORT DATA</button>
+                    <button class="btn btn-secondary" id="importBtn">IMPORT DATA</button>
+                    <button class="btn btn-danger" id="clearBtn">CLEAR ALL DATA</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="modal" id="subModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">ADD SUBSCRIPTION</h2>
+                <button class="modal-close" id="closeModal" aria-label="Close modal">&times;</button>
+            </div>
+            <form id="subForm">
+                <div class="form-group">
+                    <label class="form-label" for="subName">SERVICE NAME</label>
+                    <input type="text" class="input" id="subName" required placeholder="NETFLIX, SPOTIFY, ETC.">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="subCost">COST</label>
+                        <input type="number" class="input" id="subCost" required step="0.01" min="0" placeholder="9.99">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="subCycle">BILLING CYCLE</label>
+                        <select class="input select" id="subCycle" required>
+                            <option value="monthly">MONTHLY</option>
+                            <option value="yearly">YEARLY</option>
+                            <option value="weekly">WEEKLY</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="subRenewal">NEXT RENEWAL DATE</label>
+                    <input type="date" class="input" id="subRenewal" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="subCategory">CATEGORY</label>
+                    <select class="input select" id="subCategory">
+                        <option value="streaming">STREAMING</option>
+                        <option value="software">SOFTWARE</option>
+                        <option value="gaming">GAMING</option>
+                        <option value="news">NEWS & MEDIA</option>
+                        <option value="fitness">FITNESS</option>
+                        <option value="education">EDUCATION</option>
+                        <option value="other">OTHER</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="subNotes">NOTES (OPTIONAL)</label>
+                    <textarea class="input textarea" id="subNotes" rows="2" placeholder="ANY ADDITIONAL INFO..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelBtn">CANCEL</button>
+                    <button type="submit" class="btn btn-primary">SAVE</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="helpGmailModal" role="dialog" aria-modal="true" aria-labelledby="helpGmailTitle">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 class="modal-title" id="helpGmailTitle">GMAIL API SETUP GUIDE</h2>
+                <button class="modal-close" onclick="document.getElementById('helpGmailModal').classList.remove('active')" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="help-content">
+                <div class="help-section">
+                    <h3 class="help-heading">// WHY DO I NEED THIS?</h3>
+                    <p>To scan your Gmail for subscriptions, you need to create your own Google API credentials. This keeps your data private - your emails are only accessed by YOUR browser using YOUR credentials. Nothing is sent to any server.</p>
+                </div>
+                <div class="help-section">
+                    <h3 class="help-heading">// STEP 1: CREATE A GOOGLE CLOUD PROJECT</h3>
+                    <ol class="help-steps">
+                        <li>Go to <a href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Console</a></li>
+                        <li>Click "Select a project" at the top, then "New Project"</li>
+                        <li>Name it something like "Subscription Tracker"</li>
+                        <li>Click "Create" and wait for it to finish</li>
+                    </ol>
+                </div>
+                <div class="help-section">
+                    <h3 class="help-heading">// STEP 2: ENABLE GMAIL API</h3>
+                    <ol class="help-steps">
+                        <li>In your project, go to "APIs & Services" → "Library"</li>
+                        <li>Search for "Gmail API"</li>
+                        <li>Click on it and press "Enable"</li>
+                    </ol>
+                </div>
+                <div class="help-section">
+                    <h3 class="help-heading">// STEP 3: CONFIGURE OAUTH CONSENT SCREEN</h3>
+                    <ol class="help-steps">
+                        <li>Go to "APIs & Services" → "OAuth consent screen"</li>
+                        <li>Select "External" and click "Create"</li>
+                        <li>Fill in App name: "Subscription Tracker"</li>
+                        <li>Add your email as User support email and Developer contact</li>
+                        <li>Click "Save and Continue"</li>
+                        <li>On Scopes page, click "Add or Remove Scopes"</li>
+                        <li>Add these scopes:
+                            <ul>
+                                <li><code>https://www.googleapis.com/auth/gmail.readonly</code></li>
+                                <li><code>https://www.googleapis.com/auth/userinfo.email</code></li>
+                            </ul>
+                        </li>
+                        <li>Click "Save and Continue"</li>
+                        <li>On Test users page, click "Add Users" and add your Gmail address</li>
+                        <li>Click "Save and Continue"</li>
+                    </ol>
+                </div>
+                <div class="help-section">
+                    <h3 class="help-heading">// STEP 4: CREATE OAUTH CREDENTIALS</h3>
+                    <ol class="help-steps">
+                        <li>Go to "APIs & Services" → "Credentials"</li>
+                        <li>Click "Create Credentials" → "OAuth client ID"</li>
+                        <li>Application type: "Web application"</li>
+                        <li>Name: "Subscription Tracker Web"</li>
+                        <li>Under "Authorized JavaScript origins", add:
+                            <ul><li><code id="jsOrigin">http://localhost:8000</code></li></ul>
+                        </li>
+                        <li>Under "Authorized redirect URIs", add:
+                            <ul><li><code id="redirectUri">http://localhost:8000/index.html</code></li></ul>
+                        </li>
+                        <li>Click "Create"</li>
+                        <li>Copy the "Client ID" (looks like: xxxxx.apps.googleusercontent.com)</li>
+                    </ol>
+                </div>
+                <div class="help-section help-warning">
+                    <h3 class="help-heading">⚠️ IMPORTANT NOTES</h3>
+                    <ul>
+                        <li>Your app will be in "Testing" mode - only test users you added can use it</li>
+                        <li>You'll see a "Google hasn't verified this app" warning - click "Continue" (it's YOUR app)</li>
+                        <li>The Client ID is safe to use client-side - it's not a secret</li>
+                        <li>Your credentials are stored in your browser's localStorage only</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="helpOutlookModal" role="dialog" aria-modal="true" aria-labelledby="helpOutlookTitle">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h2 class="modal-title" id="helpOutlookTitle">OUTLOOK API SETUP GUIDE</h2>
+                <button class="modal-close" onclick="document.getElementById('helpOutlookModal').classList.remove('active')" aria-label="Close modal">&times;</button>
+            </div>
+            <div class="help-content">
+                <div class="help-section">
+                    <h3 class="help-heading">// WHY DO I NEED THIS?</h3>
+                    <p>To scan your Outlook/Microsoft email for subscriptions, you need to create your own Microsoft Azure app registration. This keeps your data private - your emails are only accessed by YOUR browser using YOUR credentials.</p>
+                </div>
+                <div class="help-section">
+                    <h3 class="help-heading">// STEP 1: GO TO AZURE PORTAL</h3>
+                    <ol class="help-steps">
+                        <li>Go to <a href="https://portal.azure.com/" target="_blank" rel="noopener">Azure Portal</a></li>
+                        <li>Sign in with your Microsoft account</li>
+                        <li>Search for "App registrations" in the search bar</li>
+                        <li>Click on "App registrations"</li>
+                    </ol>
+                </div>
+                <div class="help-section">
+                    <h3 class="help-heading">// STEP 2: CREATE NEW REGISTRATION</h3>
+                    <ol class="help-steps">
+                        <li>Click "New registration"</li>
+                        <li>Name: "Subscription Tracker"</li>
+                        <li>Supported account types: "Accounts in any organizational directory and personal Microsoft accounts"</li>
+                        <li>Redirect URI: Select "Single-page application (SPA)" and enter:
+                            <ul><li><code id="msRedirectUri">http://localhost:8000/index.html</code></li></ul>
+                        </li>
+                        <li>Click "Register"</li>
+                    </ol>
+                </div>
+                <div class="help-section">
+                    <h3 class="help-heading">// STEP 3: CONFIGURE API PERMISSIONS</h3>
+                    <ol class="help-steps">
+                        <li>In your app, go to "API permissions"</li>
+                        <li>Click "Add a permission"</li>
+                        <li>Select "Microsoft Graph"</li>
+                        <li>Select "Delegated permissions"</li>
+                        <li>Search and add these permissions:
+                            <ul>
+                                <li><code>Mail.Read</code></li>
+                                <li><code>User.Read</code></li>
+                                <li><code>openid</code></li>
+                                <li><code>email</code></li>
+                            </ul>
+                        </li>
+                        <li>Click "Add permissions"</li>
+                    </ol>
+                </div>
+                <div class="help-section">
+                    <h3 class="help-heading">// STEP 4: GET YOUR APPLICATION ID</h3>
+                    <ol class="help-steps">
+                        <li>Go to "Overview" in your app</li>
+                        <li>Copy the "Application (client) ID"</li>
+                        <li>It looks like: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</li>
+                    </ol>
+                </div>
+                <div class="help-section help-warning">
+                    <h3 class="help-heading">⚠️ IMPORTANT NOTES</h3>
+                    <ul>
+                        <li>Make sure you selected "Single-page application (SPA)" for the redirect URI type</li>
+                        <li>The Application ID is safe to use client-side - it's not a secret</li>
+                        <li>Your credentials are stored in your browser's localStorage only</li>
+                        <li>No admin consent is required for personal accounts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer" aria-live="assertive"></div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/email.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
