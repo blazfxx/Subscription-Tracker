@@ -23,13 +23,13 @@ https://discord.gg/cmPGdhXYxp
 
 # IMAGES
 
-<img width="1105" height="593" alt="image" src="https://github.com/user-attachments/assets/2d454f70-e875-4743-bfca-15d69ecd48f6" />
+<img width="555" height="352.5" alt="image" src="https://github.com/user-attachments/assets/2d454f70-e875-4743-bfca-15d69ecd48f6" />
 
-<img width="1109" height="859" alt="image" src="https://github.com/user-attachments/assets/cd0b47d3-d725-448f-93c6-ac6271ebfb94" />
+<img width="555" height="352.5" alt="image" src="https://github.com/user-attachments/assets/cd0b47d3-d725-448f-93c6-ac6271ebfb94" />
 
 <img width="555" height="352.5" alt="image" src="https://github.com/user-attachments/assets/bb687429-a3a1-443d-b09c-8ed7fab2da49" />
 
-<img width="1095" height="587" alt="image" src="https://github.com/user-attachments/assets/81d7c710-d5d9-4e8a-a712-13d64ad1cf59" />
+<img width="555" height="352.5" alt="image" src="https://github.com/user-attachments/assets/81d7c710-d5d9-4e8a-a712-13d64ad1cf59" />
 
 
 
