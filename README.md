@@ -4,7 +4,7 @@ Have the ability to track each of your subscriptions in one spot!
 
 # How to run?
 
-Navigate to the location the repo was dwonloaded
+Navigate to the location the repo was downloaded
 
 Run:
 
