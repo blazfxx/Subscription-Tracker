@@ -18,3 +18,9 @@ Then open at:
 # Join the discord to get me to build you websites for free using AI!
 
 https://discord.gg/cmPGdhXYxp
+
+
+
+# IMAGES
+
+<img width="1105" height="593" alt="image" src="https://github.com/user-attachments/assets/2d454f70-e875-4743-bfca-15d69ecd48f6" />
